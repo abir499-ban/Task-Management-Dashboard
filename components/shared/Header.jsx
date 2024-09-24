@@ -19,12 +19,10 @@ const Header = (props) => {
                     <div class="flex flex-1 items-center justify-end md:justify-between">
                         <div className='flex justify-center items-center mx-96 my-52'>
                         <Tabs defaultValue="account" className="w-[400px]">
-                            <TabsList>
-                                <TabsTrigger value="account">Task List</TabsTrigger>
-                                <TabsTrigger value="password">Kanban</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="account"><Tasklist/></TabsContent>
-                            <TabsContent value="password">Change your password here.</TabsContent>
+                            <div className='flex flex-row flex-wrap gap-10'>
+                                <Link href='/Tasklist'>Task List</Link>
+                                <Link href='#'>Kanban</Link>
+                            </div>
                         </Tabs>
                         </div>
 

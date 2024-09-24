@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from "../ui/popover"
 import axios from 'axios'
-
+import Tasktab from './Tasktab'
 
 const Tasklist = () => {
   const [openDialog, setopenDialog] = useState(false)
@@ -50,7 +50,8 @@ const Tasklist = () => {
   }
   return (
     <>
-      <Button onClick={() => setopenDialog(true)}>Add a new Task</Button>
+    <div className='flex justify-center'>
+      <Button  onClick={() => setopenDialog(true)}>Add a new Task</Button></div>
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
@@ -117,6 +118,7 @@ const Tasklist = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+      
     </>
   )
 }
