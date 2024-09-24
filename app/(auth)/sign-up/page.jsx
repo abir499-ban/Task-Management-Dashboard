@@ -12,11 +12,13 @@ import {
 import {Label} from '@/components/ui/label'
 import {Input} from '@/components/ui/input'
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 const page = () => {
     const [openDialog, setopenDialog] = useState(false);
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
+    const router = useRouter();
 
     const handlesubmit  = async(e)=>{
         e.preventDefault();
@@ -32,6 +34,7 @@ const page = () => {
         }catch(err){
             console.log(err);
         }
+        router.push('/login');
     }
     return (
         <>
