@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server'
 
 export async function middleware(req) {
-    if (req.nextUrl.pathname == '/') {
+    if (req.nextUrl.pathname == '/' || req.nextUrl.pathname === '/tasklist' || req.nextUrl.pathname === '/kanban') {
         console.log("Middleware executed for '/' route");
         const token = req.cookies.get("token");
         if (!token) {
             return NextResponse.redirect(new URL('/login', req.url));
         }
-
         const { value } = token;
         const uri = `${req.nextUrl.origin}/api/users/token`;
         const res = await fetch(uri, {
@@ -41,5 +40,5 @@ export async function middleware(req) {
 
 
 export const config = {
-    matcher: ['/', '/sign-up', '/login'],
+    matcher: ['/', '/sign-up', '/login', '/tasklist', '/kanban'],
 };

@@ -10,5 +10,5 @@ export async function POST(req){
     const payload = await verifyToekn(value);
     console.log("verfiied")
     const user = await User.findById(payload.id);
-    return NextResponse.json({"message":"Verified", "success":true, "user_email" : user.email, "user_id" : user._id})
+    return NextResponse.json({"message":"Verified", "success":true, "user_email" : user.email, "user_id" : user.name})
 }

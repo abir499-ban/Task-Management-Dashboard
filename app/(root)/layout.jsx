@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import Header from '@/components/shared/Header';
 
-const Page = () => {
+const Page = ({children}) => {
     const [userEmail, setUserEmail] = useState('');
     const [userId, setUserId] = useState('');
 
@@ -21,9 +22,8 @@ const Page = () => {
 
     return (
         <div>
-            <h1>User Info</h1>
-            <p>Email: {userEmail}</p>
-            <p>ID: {userId}</p>
+            <Header userEmail={userEmail} userId={userId} />
+            {children}
         </div>
     );
 };
