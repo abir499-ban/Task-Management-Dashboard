@@ -12,5 +12,8 @@ export async function createToken(user){
 }
 
 export async function verifyToekn(token){
+    if (!token || typeof token !== 'string') {
+        throw new Error('Token must be a non-empty string');
+    }
     return jwt.verify(token, secret);
 }

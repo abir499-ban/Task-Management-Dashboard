@@ -13,7 +13,9 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 const page = () => {
+  const router = useRouter();
   const [openDialog, setopenDialog] = useState(true)
   const [password, setpassword] = useState("");
     const [email, setemail] = useState("");
@@ -27,6 +29,7 @@ const page = () => {
         try{
           const new_user = await axios.post('/api/users/login', formData);
           console.log("Successful LogIn ", new_user);
+          router.push('/');
       }catch(err){
           console.log(err);
       }
