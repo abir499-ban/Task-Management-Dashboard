@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Button } from '../ui/button'
+import { Button } from '../../components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,20 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+} from "../../components/ui/dialog"
+import { Label } from '../ui/label'
+import { Input } from '../ui/input'
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "../../lib/utils"
+import { Calendar } from "../ui/calendar"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "../ui/popover"
 import axios from 'axios'
 
 

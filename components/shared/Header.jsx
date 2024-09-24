@@ -4,8 +4,8 @@ import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+} from "../ui/hover-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import Tasklist from './Tasklist'; 
 
 

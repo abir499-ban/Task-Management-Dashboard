@@ -1,8 +1,8 @@
-import { User } from "@/db/models/user";
-import { connectToMongoDB } from "@/utils/dbConnect";
+import { User } from "../../../../db/models/user";
+import { connectToMongoDB } from "../../../../utils/dbConnect";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
-import {createToken} from '@/service/auth'
+import {createToken} from '../../../../service/auth'
 import { response } from "express";
 
 export async function POST(request){

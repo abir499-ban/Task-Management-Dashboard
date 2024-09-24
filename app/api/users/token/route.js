@@ -1,5 +1,5 @@
-import { User } from "@/db/models/user";
-import { verifyToekn } from "@/service/auth";
+import { User } from "../../../../db/models/user";
+import { verifyToekn } from "../../../../service/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req){

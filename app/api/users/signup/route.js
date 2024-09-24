@@ -1,4 +1,4 @@
-import { User } from '@/db/models/user';
+import { User } from '../../../../db/models/user';
 import {connectToMongoDB} from '../../../../utils/dbConnect'
 import { NextRequest,NextResponse } from 'next/server';
 import bycryptjs from 'bcrypt'

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import Header from '@/components/shared/Header';
+import Header from '../../components/shared/Header';
 
 const Page = ({children}) => {
     const [userEmail, setUserEmail] = useState('');
