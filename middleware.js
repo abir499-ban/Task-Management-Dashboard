@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {NextResponse} from 'next/server'
 
 export async function middleware(req) {
@@ -23,8 +22,8 @@ export async function middleware(req) {
     }
     
     const response = NextResponse.next();
-    response.headers.set('user_email', result.user_email);
-    response.headers.set('user_id', result.user_id);
+    response.cookies.set('user_email', result.user_email);
+    response.cookies.set('user_id', result.user_id);
     return response;
   }
   
