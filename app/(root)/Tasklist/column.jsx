@@ -17,11 +17,25 @@ import {
   DialogTrigger,
 } from "../../../components/ui/dialog"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../../components/ui/alert-dialog"
+
+
 import { ArrowUpDown } from "lucide-react";
 import React, { useState } from 'react'
 import { Ellipsis } from 'lucide-react'
 import { set } from 'date-fns';
-import {Button, buttonVariants} from '../../../components/ui/button'
+import { Button, buttonVariants } from '../../../components/ui/button'
+import axios from 'axios';
 
 
 // This type is used to define the shape of our data.
@@ -96,7 +110,14 @@ export const columns = [
     id: "options",
     cell: ({ row }) => {
       const [setDetailsDialogOPen, setsetDetailsDialogOPen] = useState(false)
-      const task = row.original;// Access the task's _id
+      const [deleteBoxopen, setdeleteBoxopen] = useState(false)
+      const task = row.original;
+
+      async function deleteTask(taskId){
+        console.log(taskId);
+        const res = await axios.delete(`/api/task/delete/${taskId}`);
+        console.log(res.data.message);
+      }
 
       return (
         <>
@@ -104,10 +125,9 @@ export const columns = [
             <DropdownMenuTrigger><Ellipsis className="hover: cursor-pointer" /></DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuSeparator />
-              <DropdownMenuItem><Button variant='ghost' onClick={()=> setsetDetailsDialogOPen(true)}>View Details</Button></DropdownMenuItem>
+              <DropdownMenuItem><Button variant='ghost' onClick={() => setsetDetailsDialogOPen(true)}>View Details</Button></DropdownMenuItem>
               <DropdownMenuItem><Button variant='ghost' >Edit</Button></DropdownMenuItem>
-              <DropdownMenuItem><Button variant='destructive' >Delete</Button></DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
+              <DropdownMenuItem><Button variant='destructive' onClick={()=> setdeleteBoxopen(true)}>Delete</Button></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -115,19 +135,36 @@ export const columns = [
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Task Details</DialogTitle>
+                <br></br>
                 <DialogDescription>
-                 <div className='flex flex-wrap flex-col gap-4'>
-                  <p><strong className='font-semibold font-sans text-black px-7'>Task Title</strong>{task.title}</p>
-                  <p><strong className='font-semibold font-sans text-black px-7'>Task Description</strong>{task.description}</p>
-                  <p><strong className='font-semibold font-sans text-black px-7'>Task Status</strong>{task.status}</p>
-                  <p><strong className='font-semibold font-sans text-black px-7'>Task Priority</strong>{task.priority}</p>
-                  <p><strong className='font-semibold font-sans text-black px-7'>Task Due Date</strong>{task.dueDate}</p>
-                 </div>
+                  <div className='flex flex-wrap flex-col gap-4'>
+                    <p><strong className='font-semibold font-sans text-black px-7'>Task Title</strong>{task.title}</p>
+                    <p><strong className='font-semibold font-sans text-black px-7'>Task Description</strong>{task.description}</p>
+                    <p><strong className='font-semibold font-sans text-black px-7'>Task Status</strong>{task.status}</p>
+                    <p><strong className='font-semibold font-sans text-black px-7'>Task Priority</strong>{task.priority}</p>
+                    <p><strong className='font-semibold font-sans text-black px-7'>Task Due Date</strong>{task.dueDate}</p>
+                  </div>
                 </DialogDescription>
               </DialogHeader>
-              <Button variant='ghost' onClick={()=> setsetDetailsDialogOPen(false)}>Close</Button>
+              <Button variant='ghost' onClick={() => setsetDetailsDialogOPen(false)}>Close</Button>
             </DialogContent>
           </Dialog>
+
+          <AlertDialog open={deleteBoxopen}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete your created task.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={()=> setdeleteBoxopen(false)}>Cancel</AlertDialogCancel>
+                <Button variant='destructive' onClick={()=>deleteTask(task._id)}>Delete</Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
 
 
         </>
