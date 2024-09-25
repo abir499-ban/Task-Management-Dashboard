@@ -9,6 +9,7 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 import { Table, TableHead, TableHeader, TableRow, TableBody, TableCell } from '../../../components/ui/table';
+import { Button } from "../../../components/ui/button";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = React.useState([]);
