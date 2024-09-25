@@ -78,7 +78,7 @@ export const columns = [
     },
   },
   {
-    accessorKey : "date",
+    accessorKey : "dueDate",
     header: "Date",
-  }
+  },
 ];
