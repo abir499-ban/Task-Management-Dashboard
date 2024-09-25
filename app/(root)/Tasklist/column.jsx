@@ -16,7 +16,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../components/ui/dialog"
+import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
 
+import { cn } from "../../../lib/utils"
+import { Calendar } from '../../../components/ui/calendar'
+import { Label } from '../../../components/ui/label'
+import { Input } from '../../../components/ui/input';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../../components/ui/popover"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -111,12 +123,36 @@ export const columns = [
     cell: ({ row }) => {
       const [setDetailsDialogOPen, setsetDetailsDialogOPen] = useState(false)
       const [deleteBoxopen, setdeleteBoxopen] = useState(false)
+      const [editBoxOpen, seteditBoxOpen] = useState(false)
       const task = row.original;
 
-      async function deleteTask(taskId){
+      const [taskTitle, settaskTitle] = useState(task.title);
+      const [taskDesc, settaskDesc] = useState(task.description);
+      const [taskstatus, settaskstatus] = useState(task.status);
+      const [taskpriority, settaskpriority] = useState(task.priority);
+
+      async function deleteTask(taskId) {
         console.log(taskId);
         const res = await axios.delete(`/api/task/delete/${taskId}`);
         console.log(res.data.message);
+      }
+      const handlesubmit = async(e) => {
+        e.preventDefault();
+        const formData = {
+          taskId : task._id,
+          taskTitle: taskTitle,
+          taskDesc: taskDesc,
+          taskstatus: taskstatus,
+          taskpriority: taskpriority,
+          taskdate: task.dueDate,
+        }
+        try {
+          const res = await axios.post(`/api/task/update/${task._id}`, formData);
+          console.log(res.data.message);
+        } catch (error) {
+          console.log(error);
+        }
+        seteditBoxOpen(false);
       }
 
       return (
@@ -126,8 +162,8 @@ export const columns = [
             <DropdownMenuContent>
               <DropdownMenuSeparator />
               <DropdownMenuItem><Button variant='ghost' onClick={() => setsetDetailsDialogOPen(true)}>View Details</Button></DropdownMenuItem>
-              <DropdownMenuItem><Button variant='ghost' >Edit</Button></DropdownMenuItem>
-              <DropdownMenuItem><Button variant='destructive' onClick={()=> setdeleteBoxopen(true)}>Delete</Button></DropdownMenuItem>
+              <DropdownMenuItem><Button variant='ghost' onClick={() => seteditBoxOpen(true)}>Edit</Button></DropdownMenuItem>
+              <DropdownMenuItem><Button variant='destructive' onClick={() => setdeleteBoxopen(true)}>Delete</Button></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -159,11 +195,74 @@ export const columns = [
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel onClick={()=> setdeleteBoxopen(false)}>Cancel</AlertDialogCancel>
-                <Button variant='destructive' onClick={()=>deleteTask(task._id)}>Delete</Button>
+                <AlertDialogCancel onClick={() => setdeleteBoxopen(false)}>Cancel</AlertDialogCancel>
+                <Button variant='destructive' onClick={() => deleteTask(task._id)}>Delete</Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+
+
+          <Dialog open={editBoxOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit Task</DialogTitle>
+                <DialogDescription>
+                  <form onSubmit={handlesubmit}>
+                    <div className='my-5'>
+                      <Label>Task Title</Label>
+                      <Input required type='text' value={taskTitle} onChange={(e) => settaskTitle(e.target.value)}></Input>
+                    </div>
+                    <div className='my-5'>
+                      <Label>Task Description</Label>
+                      <Input required type='text' value={taskDesc} onChange={(e) => settaskDesc(e.target.value)}></Input>
+                    </div>
+                    <div className='my-5'>
+                      <Label>Task Priority</Label>
+                      <RadioGroup defaultValue={taskpriority} onValueChange={settaskpriority}>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Low" id="option-one" />
+                          <Label htmlFor="Low"><p className='text-green-800'>Low</p></Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Medium" id="option-two" />
+                          <Label htmlFor="Medium"><p className='text-yellow-500'>Medium</p></Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="High" id="option-three" />
+                          <Label htmlFor="High"><p className='text-orange-600'>High</p></Label>
+                        </div>
+                      </RadioGroup>
+
+                    </div>
+
+                    <div className='my-5'>
+                      <Label>Task Status</Label>
+                      <RadioGroup defaultValue={taskstatus} onValueChange={settaskstatus}>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Completed" id="option-one" />
+                          <Label htmlFor="Completed"><p className='text-green-800'>Completed</p></Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Progress" id="option-two" />
+                          <Label htmlFor="Progress"><p className='text-yellow-500'>Progress</p></Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="To Do" id="option-three" />
+                          <Label htmlFor="To Do"><p className='text-orange-600'>To Do</p></Label>
+                        </div>
+                      </RadioGroup>
+
+                    </div>
+
+                    <div className='flex flex-wrap flex-row justify-end gap-2'>
+                      <Button type='submit'>Edit Task</Button>
+                      <Button variant="ghost" onClick={() => seteditBoxOpen(false)}>Close</Button>
+                    </div>
+                  </form>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
 
 
 
