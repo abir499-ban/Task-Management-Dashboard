@@ -31,7 +31,7 @@ const Tasklist = () => {
   const [taskdesc, settaskdesc] = useState("")
   const [status, setstatus] = useState("To Do")
   const [priority, setpriority] = useState("Medium");
-  const [date, setdate] = useState();
+  const [date, setdate] = useState(null);
   const handlesubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -44,6 +44,7 @@ const Tasklist = () => {
     try {
       const res = await axios.post('/api/task/create', formData);
       console.log("Sucess");
+      setopenDialog(false);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +52,7 @@ const Tasklist = () => {
   return (
     <>
     <div className='flex justify-center'>
-      <Button  onClick={() => setopenDialog(true)}>Add a new Task</Button></div>
+      <Button  onClick={() => setopenDialog(true)}><strong>+</strong> Add a new Task</Button></div>
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>

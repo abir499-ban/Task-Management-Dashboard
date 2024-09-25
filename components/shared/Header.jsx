@@ -26,7 +26,7 @@ const Header = (props) => {
                         </Tabs>
                         </div>
 
-                        <div class="flex items-center gap-4">
+                        <div class="-mx-44">
                             <HoverCard>
                                 <HoverCardTrigger><p className='hover: cursor-pointer hover:underline font-bold'>User</p></HoverCardTrigger>
                                 <HoverCardContent>

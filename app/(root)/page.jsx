@@ -1,14 +1,15 @@
-"use client"; 
+"use client"
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 
-import React from 'react';
+const page = () => {
+  const router = useRouter();
+  useEffect(()=>{
+    router.push('/Tasklist')
+  }, [])
+  return (
+    <div>TASK MANAGEMENT APP</div>
+  )
+}
 
-const Page = () => {
-
-    return (
-        <div>
-            HOME
-        </div>
-    );
-};
-
-export default Page;
+export default page

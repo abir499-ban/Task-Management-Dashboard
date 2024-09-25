@@ -21,7 +21,7 @@ const Page = ({children}) => {
     }, []);
 
     return (
-        <div>
+        <div className='mx-48'>
             <Header userEmail={userEmail} userId={userId} />
             {children}
         </div>
