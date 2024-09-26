@@ -18,7 +18,7 @@ import { Input } from '../../../components/ui/input'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Description } from '@radix-ui/react-toast'
-const page = () => {
+const LoginPage = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [openDialog, setopenDialog] = useState(true)
@@ -90,4 +90,4 @@ const page = () => {
   )
 }
 
-export default page
+export default LoginPage

@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const page = () => {
+const SignUpPage  = () => {
     const [openDialog, setopenDialog] = useState(false);
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
@@ -76,4 +76,4 @@ const page = () => {
     )
 }
 
-export default page
+export default SignUpPage 

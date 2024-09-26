@@ -122,7 +122,7 @@ export const columns = [
   },
   {
     id: "options",
-    cell: ({ row }) => {
+    Cell: ({ row }) => {
       const [setDetailsDialogOPen, setsetDetailsDialogOPen] = useState(false)
       const [deleteBoxopen, setdeleteBoxopen] = useState(false)
       const [editBoxOpen, seteditBoxOpen] = useState(false)
