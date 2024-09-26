@@ -86,9 +86,9 @@ export const columns = [
       const titleB = rowB.getValue("status").toLowerCase();
 
       // Custom sorting logic, e.g., alphabetical order
-      if (titleA == 'to do' && titleB == 'in progress') return 1; // A should come before B
+      if (titleA == 'to do' && titleB == 'progress') return 1; // A should come before B
       else if (titleA == 'to do' && titleB == 'completed') return 1;  // A should come after B
-      else if (titleA == 'in progress' && titleB == 'completed') return 1;
+      else if (titleA == 'progress' && titleB == 'completed') return 1;
       else return -1;
     },
   },
@@ -176,6 +176,7 @@ export const columns = [
               variant: "destructive"
             })
           }
+          seteditBoxOpen(false);
         } catch (error) {
           console.log(error);
         }finally{
