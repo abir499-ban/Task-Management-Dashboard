@@ -13,6 +13,8 @@ import {Label} from '../../../components/ui/label'
 import {Input} from '../../../components/ui/input'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 const page = () => {
     const [openDialog, setopenDialog] = useState(false);
     const [name, setname] = useState("");
@@ -61,6 +63,9 @@ const page = () => {
                                     <Button type='submit'>Sign Up</Button>
                                     <Button variant="ghost" onClick={()=>setopenDialog(false)}>Close</Button>
                                 </div>
+                                <div className='my-5'>
+                  <p className='text-blue-400 hover:underline'><Link href='/login'>Already have an account? Log in here</Link></p>
+                </div>
                             </form>
                         </DialogDescription>
                     </DialogHeader>
