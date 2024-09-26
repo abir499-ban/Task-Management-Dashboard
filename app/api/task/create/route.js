@@ -18,5 +18,6 @@ export async function POST(req){
         return NextResponse.json({"message" : "Task created successfully", "success": true});
     }catch(err){
         console.log("Error ", err);
+        return NextResponse.json({"message" : "Failed to add task", "success" : false})
     }
 }

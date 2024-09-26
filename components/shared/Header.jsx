@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import  Cookies from 'js-cookie'
 import {
     HoverCard,
     HoverCardContent,
@@ -7,9 +8,19 @@ import {
 } from "../ui/hover-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import Tasklist from './Tasklist'; 
-
+import { Button } from '../ui/button';
+import {LogOut} from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const Header = (props) => {
+    const router = useRouter();
+    const Logout = ()=>{
+        const allCookies = Cookies.get();
+        Object.keys(allCookies).forEach((cookieName)=>{
+            Cookies.remove(cookieName);
+        })
+        router.push('/');
+    }
     return (
         <>
             <header class="bg-white">
@@ -33,6 +44,7 @@ const Header = (props) => {
                                     <h5 className='font-semibold'>User Info</h5>
                                     <p>{props.userId}</p>
                                     <p>{props.userEmail}</p>
+                                    <Button variant='destructive' onClick={()=> Logout()}><LogOut />Log out</Button>
                                 </HoverCardContent>
                             </HoverCard>
 

@@ -1,7 +1,7 @@
 "use client"
-import React,{useState} from 'react'
-import {toast, useToast} from '../../../hooks/use-toast'
-import {Toaster} from '../../../components/ui/toaster'
+import React, { useState } from 'react'
+import { toast, useToast } from '../../../hooks/use-toast'
+import { Toaster } from '../../../components/ui/toaster'
 import Link from 'next/link'
 import { Button, buttonVariants } from '../../../components/ui/button'
 import Image from 'next/image'
@@ -19,41 +19,41 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Description } from '@radix-ui/react-toast'
 const page = () => {
-  const {toast} = useToast();
+  const { toast } = useToast();
   const router = useRouter();
   const [openDialog, setopenDialog] = useState(true)
   const [password, setpassword] = useState("");
-    const [email, setemail] = useState("");
-    const [loader, setloader] = useState(false);
-    const handlesubmit = async(e)=>{
-      setloader(true)
-      e.preventDefault();
-        const formData = {
-          email : email,
-          password : password,
-        }
-        console.log(formData);
-        try{
-          const new_user = await axios.post('/api/users/login', formData);
-          if(new_user.data.success){
-            toast({
-              description : new_user.data.message,
-              className : 'bg-green-500 text-white'
-            })
-          }else{
-            toast({
-              description : new_user.data.message,
-              variant : "destructive"
-            })
-          }
-          router.push('/');
-      }catch(err){
-          console.log(err);
-      }finally{
-        setloader(false);
-      }
-      
+  const [email, setemail] = useState("");
+  const [loader, setloader] = useState(false);
+  const handlesubmit = async (e) => {
+    setloader(true)
+    e.preventDefault();
+    const formData = {
+      email: email,
+      password: password,
     }
+    console.log(formData);
+    try {
+      const new_user = await axios.post('/api/users/login', formData);
+      if (new_user.data.success) {
+        toast({
+          description: new_user.data.message,
+          className: 'bg-green-500 text-white'
+        })
+      } else {
+        toast({
+          description: new_user.data.message,
+          variant: "destructive"
+        })
+      }
+      router.push('/');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setloader(false);
+    }
+
+  }
   return (
     <>
       <Dialog open={openDialog}>
@@ -75,11 +75,11 @@ const page = () => {
                 </div>
                 <div className='flex flex-wrap flex-row justify-end gap-2'>
                   {loader ? (
-                    <Button type='submit' disabled='true'><Image src={'/loader.svg'} height='20' width='20' alt='loader'/>Log In</Button>
-                  ):(
+                    <Button type='submit' disabled='true'><Image src={'/loader.svg'} height='20' width='20' alt='loader' />Log In</Button>
+                  ) : (
                     <Button type='submit'>Log In</Button>
                   )}
-                  
+
                 </div>
               </form>
             </DialogDescription>

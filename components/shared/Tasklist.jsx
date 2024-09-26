@@ -24,15 +24,23 @@ import {
 } from "../ui/popover"
 import axios from 'axios'
 import Tasktab from './Tasktab'
+import { useToast } from '../../hooks/use-toast'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 const Tasklist = () => {
+  const router=useRouter();
+  const {toast} = useToast();
   const [openDialog, setopenDialog] = useState(false)
   const [taskTitle, settaskTitle] = useState("")
   const [taskdesc, settaskdesc] = useState("")
   const [status, setstatus] = useState("To Do")
   const [priority, setpriority] = useState("Medium");
   const [date, setdate] = useState(null);
+  const [loader, setloader] = useState(false);
+
   const handlesubmit = async (e) => {
+    setloader(true);
     e.preventDefault();
     const formData = {
       taskTitle: taskTitle,
@@ -43,11 +51,26 @@ const Tasklist = () => {
     }
     try {
       const res = await axios.post('/api/task/create', formData);
-      console.log("Sucess");
+      if(res.data.success){
+        toast({
+          description: res.data.message,
+          className: 'bg-green-500 text-white'
+        })
+      }else{
+        toast({
+          description: res.data.message,
+          variant: "destructive"
+        })
+      }
       setopenDialog(false);
     } catch (error) {
       console.log(error);
+    }finally{
+      setloader(false);
+      setopenDialog(false);
+      router.push('/Tasklist')
     }
+    router.push('/Tasklist')
   }
   return (
     <>
@@ -111,7 +134,11 @@ const Tasklist = () => {
                   </Popover>
                 </div>
                 <div className='flex flex-wrap flex-row justify-end gap-2'>
-                  <Button type='submit'>Add a Task</Button>
+                  {!loader ? (
+                    <Button type='submit'>Add a Task</Button>
+                  ) : (
+                    <Button disabled='true'><Image src={'/loader.svg'} height='20' width='20' alt='loader' />Add a Task</Button>
+                  )}
                   <Button variant="ghost" onClick={() => setopenDialog(false)}>Close</Button>
                 </div>
               </form>

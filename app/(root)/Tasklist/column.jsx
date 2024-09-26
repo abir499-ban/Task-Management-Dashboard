@@ -41,13 +41,15 @@ import {
   AlertDialogTrigger,
 } from "../../../components/ui/alert-dialog"
 
-
+import { useToast } from '../../../hooks/use-toast';
 import { ArrowUpDown } from "lucide-react";
 import React, { useState } from 'react'
 import { Ellipsis } from 'lucide-react'
 import { set } from 'date-fns';
 import { Button, buttonVariants } from '../../../components/ui/button'
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 
 // This type is used to define the shape of our data.
@@ -124,19 +126,34 @@ export const columns = [
       const [setDetailsDialogOPen, setsetDetailsDialogOPen] = useState(false)
       const [deleteBoxopen, setdeleteBoxopen] = useState(false)
       const [editBoxOpen, seteditBoxOpen] = useState(false)
+      const[loader, setloader] = useState(false);
       const task = row.original;
-
       const [taskTitle, settaskTitle] = useState(task.title);
       const [taskDesc, settaskDesc] = useState(task.description);
       const [taskstatus, settaskstatus] = useState(task.status);
       const [taskpriority, settaskpriority] = useState(task.priority);
-
+      const router = useRouter();
+      const {toast} = useToast();
       async function deleteTask(taskId) {
-        console.log(taskId);
+        setloader(true)
         const res = await axios.delete(`/api/task/delete/${taskId}`);
-        console.log(res.data.message);
+        if(res.data.success){
+          toast({
+            description: res.data.message,
+            className: 'bg-green-500 text-white'
+          })
+        }else{
+          toast({
+            description: res.data.message,
+            variant: "destructive"
+          })
+        }
+        setdeleteBoxopen(false);
+        setloader(false);
+        router.push('/Tasklist');
       }
       const handlesubmit = async(e) => {
+        setloader(true);
         e.preventDefault();
         const formData = {
           taskId : task._id,
@@ -148,11 +165,24 @@ export const columns = [
         }
         try {
           const res = await axios.post(`/api/task/update/${task._id}`, formData);
-          console.log(res.data.message);
+          if(res.data.success){
+            toast({
+              description: res.data.message,
+              className: 'bg-green-500 text-white'
+            })
+          }else{
+            toast({
+              description: res.data.message,
+              variant: "destructive"
+            })
+          }
         } catch (error) {
           console.log(error);
+        }finally{
+          seteditBoxOpen(false);
+          setloader(false);
         }
-        seteditBoxOpen(false);
+        
       }
 
       return (
@@ -196,7 +226,12 @@ export const columns = [
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={() => setdeleteBoxopen(false)}>Cancel</AlertDialogCancel>
-                <Button variant='destructive' onClick={() => deleteTask(task._id)}>Delete</Button>
+                {!loader ? (
+                  <Button variant='destructive' onClick={() => deleteTask(task._id)}>Delete</Button>
+                ):
+                (
+                  <Button variant='destructive' disabled='true'><Image src={'/loader.svg'} height='20' width='20' alt='loader' />Delete</Button>
+                )}
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -255,7 +290,11 @@ export const columns = [
                     </div>
 
                     <div className='flex flex-wrap flex-row justify-end gap-2'>
-                      <Button type='submit'>Edit Task</Button>
+                      {!loader ? (
+                        <Button type='submit'>Edit Task</Button>
+                      ) : (
+                        <Button disabled='true'><Image src={'/loader.svg'} height='20' width='20' alt='loader' />Edit Task</Button>
+                      )}
                       <Button variant="ghost" onClick={() => seteditBoxOpen(false)}>Close</Button>
                     </div>
                   </form>

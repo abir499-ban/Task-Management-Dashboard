@@ -8,6 +8,6 @@ export async function DELETE(req, {params}){
         await Task.findByIdAndDelete(taskId);
         return NextResponse.json({"message" : "Task successfully deleted", "success" : true});
     }catch(err){
-        return NextResponse.json({"message" : err, "success" : false});
+        return NextResponse.json({"message" : "Error in deleting the  task", "success" : false});
     }
 }
