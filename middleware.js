@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export async function middleware(req) {
-    if (req.nextUrl.pathname == '/' || req.nextUrl.pathname === '/tasklist' || req.nextUrl.pathname === '/kanban') {
+    if (req.nextUrl.pathname == '/' || req.nextUrl.pathname === '/Tasklist' || req.nextUrl.pathname === '/kanban') {
         console.log("Middleware executed for '/' route");
         const token = req.cookies.get("token");
         if (!token) {
@@ -40,5 +40,5 @@ export async function middleware(req) {
 
 
 export const config = {
-    matcher: ['/', '/sign-up', '/login', '/tasklist', '/kanban'],
+    matcher: ['/', '/sign-up', '/login', '/Tasklist', '/kanban'],
 };
