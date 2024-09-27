@@ -68,7 +68,6 @@ const Tasklist = () => {
     }finally{
       setloader(false);
       setopenDialog(false);
-      router.push('/Tasklist')
     }
     router.push('/Tasklist')
   }

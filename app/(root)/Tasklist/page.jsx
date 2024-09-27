@@ -20,6 +20,7 @@ export default function DemoPage() {
                 return task;
               });
               setallTasks(tasksWithFormattedDates);
+              console.log(allTasks);
           } catch (error) {
               console.error('Error fetching tasks:', error);
           }
