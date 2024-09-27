@@ -26,7 +26,7 @@ export default function DemoPage() {
           }
       };
       fetchTasks(); 
-  }, []);
+  }, [allTasks]);
 
   return (
     <div className="container mx-auto py-10">
