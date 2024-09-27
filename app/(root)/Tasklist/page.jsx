@@ -19,14 +19,14 @@ export default function DemoPage() {
                 }
                 return task;
               });
+              console.log(tasksWithFormattedDates);
               setallTasks(tasksWithFormattedDates);
-              console.log(allTasks);
           } catch (error) {
               console.error('Error fetching tasks:', error);
           }
       };
       fetchTasks(); 
-  }, [allTasks]);
+  }, []);
 
   return (
     <div className="container mx-auto py-10">
